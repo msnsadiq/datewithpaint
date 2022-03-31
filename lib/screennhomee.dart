@@ -1,6 +1,8 @@
 import 'package:checkoutflutter/bigarcclass.dart';
 import 'package:checkoutflutter/bottompaint.dart';
+import 'package:checkoutflutter/bottompainttwo.dart';
 import 'package:checkoutflutter/classofpaint.dart';
+import 'package:checkoutflutter/months.dart';
 import 'package:flutter/material.dart';
 
 class ScreenHome extends StatefulWidget {
@@ -8,6 +10,23 @@ class ScreenHome extends StatefulWidget {
 
   @override
   State<ScreenHome> createState() => _ScreenHomeState();
+}
+ dynamic _index = 0;
+void increment(){
+
+  Months().monthss[_index ++];
+  if(_index >= 12){
+    _index = 0;
+  }
+
+}
+void decrement(){
+
+  Months().monthss[_index --];
+  if(_index < 0){
+    _index = 11;
+  }
+
 }
 
 final blackk = Colors.black;
@@ -48,7 +67,7 @@ class _ScreenHomeState extends State<ScreenHome> {
               Positioned(
                 bottom: MediaQuery.of(context).size.height / 100,
                 child: Container(
-                  height: MediaQuery.of(context).size.height * .60,
+                  height: MediaQuery.of(context).size.height * .65,
                   width: MediaQuery.of(context).size.width,
                   color: Colors.transparent,
                   child: Column(
@@ -56,24 +75,31 @@ class _ScreenHomeState extends State<ScreenHome> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Icon(
-                            Icons.arrow_back_ios,
-                            color: blackk,
-                          ),
+
+                          IconButton(onPressed: (){
+                         setState(() {
+                           decrement();
+                         });
+                          }, icon:Icon( Icons.arrow_back_ios)),
                           SizedBox(
                             width: 20,
                           ),
                           Text(
-                            "March",
+                            Months().monthss[_index],
                             style: TextStyle(color: Colors.black),
                           ),
                           SizedBox(
                             width: 20,
                           ),
-                          Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            color: blackk,
-                          ),
+                          // Icon(
+                          //   Icons.arrow_forward_ios_rounded,
+                          //   color: blackk,
+                          // ),
+                          IconButton(onPressed: (){
+                            setState(() {
+                              increment();
+                            });
+                          }, icon: Icon(Icons.arrow_forward_ios_rounded))
                         ],
                       ),
                       // Container(
@@ -84,8 +110,8 @@ class _ScreenHomeState extends State<ScreenHome> {
                       //   ),
                       // )
 
-                      Container(
-                        color: Colors.red,
+                      SizedBox(
+                        //color: Colors.red,
                         height: 260,
                         width: 200,
                         child: CustomPaint(
@@ -93,8 +119,9 @@ class _ScreenHomeState extends State<ScreenHome> {
                           child: Column(
                            // mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                             // Padding(padding: EdgeInsets.fromLTRB(left, top, right, bottom)),
                             Padding(
-                              padding: EdgeInsets.fromLTRB(0, 90, 0, 0),
+                              padding: EdgeInsets.fromLTRB(15, 90, 0, 0),
                               child: Text(
 
                                 "128",
@@ -106,10 +133,14 @@ class _ScreenHomeState extends State<ScreenHome> {
                               ),
                             ),
                               Padding(
-                                padding: EdgeInsets.fromLTRB(0, 57,
+                                padding: EdgeInsets.fromLTRB(28, 57,
                                     0, 0, ),
                                   child: Text("Completed",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
-                              Text("64%")
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(28, 0,
+                                  0, 0,),
+                                child: Text("64%"),
+                              )
                             ],
                           ),
                         ),
@@ -128,6 +159,57 @@ class _ScreenHomeState extends State<ScreenHome> {
                       //     ],
                       //   ),
                       // ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(
+                              height: 130,
+                              width: 100,
+                             // color: Colors.pinkAccent,
+                              child: CustomPaint(
+                                foregroundPainter: BottomArc(),
+                                child: Column(
+                                  children: [
+                                    Padding(padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+
+                                    child: Text("48",style: TextStyle(fontSize: 29),),),
+                                    Padding(padding: EdgeInsets.fromLTRB(0, 28, 0, 0),
+                                    child:
+                                    Text("Snoozed",style: TextStyle(fontWeight: FontWeight.bold),),
+
+                                    ),
+                                    Text("24%")
+
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 130,
+                              width: 100,
+                              //color: Colors.green,
+                              child: CustomPaint(
+                                foregroundPainter: RightArc(),
+                                child: Column(
+                                  children: [
+                                    Padding(padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+
+                                      child: Text("24",style: TextStyle(fontSize: 29),),),
+                                    Padding(padding: EdgeInsets.fromLTRB(0, 28, 0, 0),
+                                      child:
+                                      Text("Snoozed",style: TextStyle(fontWeight: FontWeight.bold),),
+
+                                    ),
+                                    Text("12%")
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -136,4 +218,5 @@ class _ScreenHomeState extends State<ScreenHome> {
           ),
         ));
   }
+
 }
